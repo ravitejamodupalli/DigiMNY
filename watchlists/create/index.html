@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accordion Table with Charts</title>
+
+    <link rel="stylesheet" href="/styles/index.css" />
+
+    <script type="module">
+      import config from "/scripts/tailwind.config.js";
+
+      window.tailwind = window.tailwind || {};
+      window.tailwind.config = config;
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Chart.js (via CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <header class="flex items-center px-4 md:px-8 py-4 bg-white">
+      <!-- Coinbase Logo -->
+      <a href="/">
+        <!-- <img
+          src="https://images.ctfassets.net/q5ulk4bp65r7/3TBS4oVkD1ghowTqVQJlqj/2dfd4ea3b623a7c0d8deb2ff445dee9e/Consumer_Wordmark.svg"
+          alt="Coinbase Logo"
+          class="h-6 md:h-8"
+        /> -->
+        <div class="nav-logo">DigiMNY</div>
+      </a>
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:block ml-auto mr-4">
+        <ul class="flex space-x-6 text-sm">
+          <li>
+            <a href="/watchlists" class="text-cb-blue">Watchlist</a>
+          </li>
+          <li><a href="/about" class="hover:text-cb-blue">About Us</a></li>
+        </ul>
+      </nav>
+      <!-- Desktop Right Buttons -->
+      <div class="hidden md:flex space-x-4">
+        <button class="text-sm hover:text-cb-blue rounded-full">Sign in</button>
+        <button class="px-4 py-2 bg-cb-blue text-white text-sm rounded-full">
+          Sign up
+        </button>
+      </div>
+      <!-- Mobile Menu Button (visible on mobile only) -->
+      <button class="md:hidden text-cb-dark">☰</button>
+    </header>
+
+    <main>
+      <section
+        class="container mx-auto px-1 py-8 pb-0 flex justify-between items-center"
+      >
+        <form class="max-w-lg mx-auto p-6 bg-white shadow rounded">
+          <!-- Form Header -->
+          <h2 class="text-2xl font-bold mb-2">Create a watchlist</h2>
+          <p class="text-gray-600 mb-4">
+            Use this watchlist to track the prices of various crypto currencies.
+          </p>
+
+          <!-- Field: Name -->
+          <div class="mb-4">
+            <label class="block text-gray-700 mb-1" for="watchlist-name"
+              >Name</label
+            >
+            <input
+              id="watchlist-name"
+              type="text"
+              placeholder="Enter watchlist name"
+              class="w-full border border-gray-300 rounded p-2"
+            />
+          </div>
+
+          <!-- Field: Private/Public Toggle -->
+          <div class="mb-4">
+            <label class="block text-gray-700 mb-1">Access</label>
+            <div class="flex space-x-4">
+              <label class="inline-flex items-center">
+                <input
+                  type="radio"
+                  class="form-radio"
+                  name="access"
+                  value="private"
+                />
+                <span class="ml-2">Private</span>
+              </label>
+              <label class="inline-flex items-center">
+                <input
+                  type="radio"
+                  class="form-radio"
+                  name="access"
+                  value="public"
+                  checked
+                />
+                <span class="ml-2">Public</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Field: Grid of 6 Items -->
+          <div class="mb-4">
+            <label class="block text-gray-700 mb-1">Select Items</label>
+            <!-- Items Container -->
+            <div class="grid grid-cols-2 gap-4 sm:grid-cols-3">
+              <!-- Item 1 -->
+              <div
+                class="item relative p-4 border rounded flex flex-col items-center space-y-2 cursor-pointer"
+              >
+                <img
+                  src="/images/bitcoin.png"
+                  alt="Item 1"
+                  class="w-20 h-20 object-cover"
+                />
+                <span class="text-sm font-medium">Bitcoin</span>
+                <div
+                  class="tick-icon absolute top-2 right-2 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white opacity-0 transition-opacity"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-3 h-3"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="3"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <!-- Item 2 -->
+              <div
+                class="item relative p-4 border rounded flex flex-col items-center space-y-2 cursor-pointer"
+              >
+                <img
+                  src="/images/ethereum.png"
+                  alt="Item 2"
+                  class="w-20 h-20 object-cover"
+                />
+                <span class="text-sm font-medium">Ethereum</span>
+                <div
+                  class="tick-icon absolute top-2 right-2 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white opacity-0 transition-opacity"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-3 h-3"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="3"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <!-- Item 3 -->
+              <div
+                class="item relative p-4 border rounded flex flex-col items-center space-y-2 cursor-pointer"
+              >
+                <img
+                  src="/images/tether.png"
+                  alt="Item 3"
+                  class="w-20 h-20 object-cover"
+                />
+                <span class="text-sm font-medium">Tether</span>
+                <div
+                  class="tick-icon absolute top-2 right-2 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white opacity-0 transition-opacity"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-3 h-3"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="3"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <!-- Item 4 -->
+              <div
+                class="item relative p-4 border rounded flex flex-col items-center space-y-2 cursor-pointer"
+              >
+                <img
+                  src="/images/xrp.png"
+                  alt="Item 4"
+                  class="w-20 h-20 object-cover"
+                />
+                <span class="text-sm font-medium">XRP</span>
+                <div
+                  class="tick-icon absolute top-2 right-2 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white opacity-0 transition-opacity"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-3 h-3"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="3"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <!-- Item 5 -->
+              <div
+                class="item relative p-4 border rounded flex flex-col items-center space-y-2 cursor-pointer"
+              >
+                <img
+                  src="/images/usdc.png"
+                  alt="Item 5"
+                  class="w-20 h-20 object-cover"
+                />
+                <span class="text-sm font-medium">USDC</span>
+                <div
+                  class="tick-icon absolute top-2 right-2 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white opacity-0 transition-opacity"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-3 h-3"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="3"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <!-- Item 6 -->
+              <div
+                class="item relative p-4 border rounded flex flex-col items-center space-y-2 cursor-pointer"
+              >
+                <img
+                  src="/images/solana.png"
+                  alt="Item 6"
+                  class="w-20 h-20 object-cover"
+                />
+                <span class="text-sm font-medium">Solana</span>
+                <div
+                  class="tick-icon absolute top-2 right-2 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white opacity-0 transition-opacity"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-3 h-3"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="3"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex space-x-4">
+            <button
+              type="submit"
+              class="bg-cb-blue text-white px-4 py-2 rounded-full"
+            >
+              Save
+            </button>
+            <button
+              type="reset"
+              class="border border-gray-300 px-4 py-2 rounded-full"
+            >
+              Reset
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+    <script>
+      document.querySelectorAll(".item").forEach((item) => {
+        item.addEventListener("click", () => {
+          const tickIcon = item.querySelector(".tick-icon");
+          // Toggle between hidden (opacity-0) and visible (opacity-100)
+          if (tickIcon.classList.contains("opacity-0")) {
+            tickIcon.classList.remove("opacity-0");
+            tickIcon.classList.add("opacity-100");
+          } else {
+            tickIcon.classList.remove("opacity-100");
+            tickIcon.classList.add("opacity-0");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
