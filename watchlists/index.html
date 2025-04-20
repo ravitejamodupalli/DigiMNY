@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accordion Table with Charts</title>
+
+    <link rel="stylesheet" href="/styles/index.css" />
+
+    <script type="module">
+      import config from "/scripts/tailwind.config.js";
+
+      window.tailwind = window.tailwind || {};
+      window.tailwind.config = config;
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Chart.js (via CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body class="bg-gray-50 text-gray-800">
+    <header class="flex items-center px-4 md:px-8 py-4 bg-white">
+      <!-- Coinbase Logo -->
+      <a href="/">
+        <!-- <img
+          src="https://images.ctfassets.net/q5ulk4bp65r7/3TBS4oVkD1ghowTqVQJlqj/2dfd4ea3b623a7c0d8deb2ff445dee9e/Consumer_Wordmark.svg"
+          alt="Coinbase Logo"
+          class="h-6 md:h-8"
+        /> -->
+        <div class="nav-logo">DigiMNY</div>
+      </a>
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:block ml-auto mr-4">
+        <ul class="flex space-x-6 text-sm">
+          <li><a href="#" class="text-cb-blue">Watchlist</a></li>
+          <li><a href="/about" class="hover:text-cb-blue">About Us</a></li>
+        </ul>
+      </nav>
+      <!-- Desktop Right Buttons -->
+      <div class="hidden md:flex space-x-4">
+        <button class="text-sm hover:text-cb-blue rounded-full">Sign in</button>
+        <button class="px-4 py-2 bg-cb-blue text-white text-sm rounded-full">
+          Sign up
+        </button>
+      </div>
+      <!-- Mobile Menu Button (visible on mobile only) -->
+      <button class="md:hidden text-cb-dark">☰</button>
+    </header>
+    <div
+      class="container mx-auto px-1 py-8 pb-0 flex justify-between items-center"
+    >
+      <h1 class="text-2xl font-semibold text-cb-dark">My Watchlists</h1>
+
+      <div class="relative inline-block text-left">
+        <!-- Button to toggle dropdown -->
+        <button
+          id="menuBtn"
+          class="rounded-full bg-gray-200 p-2 focus:outline-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <circle cx="5" cy="12" r="2" />
+            <circle cx="12" cy="12" r="2" />
+            <circle cx="19" cy="12" r="2" />
+          </svg>
+        </button>
+        <!-- Dropdown menu (hidden by default) -->
+        <div
+          id="dropdownMenu"
+          class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white hidden"
+        >
+          <div class="py-1">
+            <!-- Option 1: Create a new watchlist -->
+            <a
+              href="/watchlists/create/"
+              class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
+              <!-- Plus Icon -->
+              <svg
+                class="w-5 h-5 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+              Create a new watchlist
+            </a>
+
+            <a
+              href="#"
+              class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 opacity-50"
+            >
+              Organize watchlists
+            </a>
+
+            <a
+              href="#"
+              class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 opacity-50"
+            >
+              RBAC Watchlist
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container mx-auto px-4 py-8">
+      <div class="flex items-center gap-2">
+        <h1 class="text-2xl font-bold mb-6 mr-auto">My Top 2</h1>
+        <a
+          href='/watchlists/edit/?name=My Top 2&access=public&items=["bitcoin","ethereum"]'
+          class="text-white bg-cb-blue px-4 py-2 rounded-full flex items-center gap-1"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15.232 5.232l3.536 3.536M9 11l6-6m-3.536 3.536L4 18h4v-4"
+            />
+          </svg>
+          <span>Edit</span>
+        </a>
+        <button
+          data-item-name="My Top 2"
+          class="flex items-center px-4 py-2 text-sm rounded-full text-white bg-red-500 delete-button"
+        >
+          <!-- Trash Icon -->
+          <svg
+            class="w-5 h-5 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22"
+            />
+          </svg>
+          Delete
+        </button>
+      </div>
+
+      <!-- TABLE -->
+      <table class="min-w-full bg-white shadow rounded-lg overflow-hidden">
+        <!-- Table Header -->
+        <thead class="border-b border-gray-200">
+          <tr class="text-left">
+            <th class="px-6 py-4 font-medium text-gray-600">Asset</th>
+            <th class="px-6 py-4 font-medium text-gray-600">Price</th>
+            <th class="px-6 py-4 font-medium text-gray-600">Day Chart</th>
+            <th class="px-6 py-4 font-medium text-gray-600">Change</th>
+            <th class="px-6 py-4 font-medium text-gray-600">Mkt cap</th>
+            <th class="px-6 py-4 font-medium text-gray-600">Volume</th>
+            <th class="px-6 py-4 font-medium text-gray-600 text-right"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- ROW 1 (Bitcoin) -->
+          <tr class="border-b">
+            <td class="px-6 py-4 flex items-center space-x-2">
+              <img src="/images/bitcoin.png" alt="BTC" class="w-5 h-5" />
+              <div>
+                <p class="font-semibold">Bitcoin</p>
+                <p class="text-xs text-gray-500">BTC</p>
+              </div>
+            </td>
+            <td class="px-6 py-4">&#36;84,446.57</td>
+            <!-- Sparkline cell with canvas size 64x32 -->
+            <td class="px-6 py-4 w-24">
+              <canvas id="sparkline-btc" width="100" height="32"></canvas>
+            </td>
+            <td class="px-6 py-4 text-red-500">&#8601 1.06%</td>
+            <td class="px-6 py-4">&#36;1.7T</td>
+            <td class="px-6 py-4">&#36;14.3B</td>
+            <!-- Actions with chevron -->
+            <td class="px-6 py-4 text-right">
+              <div class="inline-flex items-center space-x-2">
+                <button
+                  class="accordion-toggle focus:outline-none"
+                  data-accordion-target="btc-chart"
+                >
+                  <!-- Chevron icon (down) -->
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 text-gray-600"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <!-- Accordion Row 1 -->
+          <tr id="btc-chart" class="hidden">
+            <td colspan="7" class="px-6 py-4 bg-gray-50">
+              <div class="w-full mx-auto bg-white p-6 rounded shadow">
+                <div class="mb-4">
+                  <select class="chartTypeSelect" class="rounded-full p-2">
+                    <option value="line">Line Chart</option>
+                    <option value="candlestick disabled" disabled>
+                      Candle Chart (Coming soon)
+                    </option>
+                    <option value="area">Area Chart</option>
+                    <option value="bar">Bar Chart</option>
+                    <option value="stepped">Stepped Line</option>
+                  </select>
+                </div>
+                <div class="relative h-96">
+                  <canvas class="w-full myChart"></canvas>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- ROW 2 (Ethereum) -->
+          <tr class="border-b">
+            <td class="px-6 py-4 flex items-center space-x-2">
+              <img src="/images/ethereum.png" alt="ETH" class="w-5 h-5" />
+              <div>
+                <p class="font-semibold">Ethereum</p>
+                <p class="text-xs text-gray-500">ETH</p>
+              </div>
+            </td>
+            <td class="px-6 py-4">&#36;1,53,050.17</td>
+            <td class="px-6 py-4 w-24">
+              <canvas id="sparkline-eth" width="100" height="32"></canvas>
+            </td>
+            <td class="px-6 py-4 text-red-500">&#8601 0.35%</td>
+            <td class="px-6 py-4">&#36;62.1T</td>
+            <td class="px-6 py-4">&#36;633.7B</td>
+            <td class="px-6 py-4 text-right">
+              <div class="inline-flex items-center space-x-2">
+                <button
+                  class="accordion-toggle focus:outline-none"
+                  data-accordion-target="eth-chart"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 text-gray-600"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <!-- Accordion Row 2 -->
+          <tr id="eth-chart" class="hidden">
+            <td colspan="7" class="px-6 py-4 bg-gray-50">
+              <div class="w-full mx-auto bg-white p-6 rounded shadow">
+                <div class="mb-4">
+                  <select class="chartTypeSelect" class="rounded-full p-2">
+                    <option value="stepped">Stepped Line</option>
+                    <option value="line">Line Chart</option>
+                    <option value="candlestick disabled" disabled>
+                      Candle Chart (Coming soon)
+                    </option>
+                    <option value="bar">Bar Chart</option>
+                    <option value="area">Area Chart</option>
+                  </select>
+                </div>
+                <div class="relative h-96">
+                  <canvas class="w-full myChart"></canvas>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="container mx-auto px-4 py-8">
+      <div class="flex items-center gap-2">
+        <h1 class="text-2xl font-bold mb-6 mr-auto">Hyper Growth</h1>
+        <a
+          href='/watchlists/edit/?name=Hyper Growth&access=public&items=["solana","xrp", "tether"]'
+          class="text-white bg-cb-blue px-4 py-2 rounded-full flex items-center gap-1"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15.232 5.232l3.536 3.536M9 11l6-6m-3.536 3.536L4 18h4v-4"
+            />
+          </svg>
+          <span>Edit</span>
+        </a>
+        <button
+          data-item-name="Hyper Growth"
+          class="flex items-center px-4 py-2 text-sm rounded-full text-white bg-red-500 delete-button"
+        >
+          <!-- Trash Icon -->
+          <svg
+            class="w-5 h-5 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22"
+            />
+          </svg>
+          Delete
+        </button>
+      </div>
+
+      <!-- TABLE -->
+      <table class="min-w-full bg-white shadow rounded-lg overflow-hidden">
+        <!-- Table Header -->
+        <thead class="border-b border-gray-200">
+          <tr class="text-left">
+            <th class="px-6 py-4 font-medium text-gray-600">Asset</th>
+            <th class="px-6 py-4 font-medium text-gray-600">Price</th>
+            <th class="px-6 py-4 font-medium text-gray-600">Chart</th>
+            <th class="px-6 py-4 font-medium text-gray-600">Change</th>
+            <th class="px-6 py-4 font-medium text-gray-600">Mkt cap</th>
+            <th class="px-6 py-4 font-medium text-gray-600">Volume</th>
+            <th class="px-6 py-4 font-medium text-gray-600 text-right"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b">
+            <td class="px-6 py-4 flex items-center space-x-2">
+              <img src="/images/tether.png" alt="USDT" class="w-5 h-5" />
+              <div>
+                <p class="font-semibold">Tether</p>
+                <p class="text-xs text-gray-500">USDT</p>
+              </div>
+            </td>
+            <td class="px-6 py-4">&#36;85.40</td>
+            <td class="px-6 py-4 w-24">
+              <canvas id="sparkline-usdt" width="100" height="32"></canvas>
+            </td>
+            <td class="px-6 py-4 text-green-500">&#8599; 0.00%</td>
+            <td class="px-6 py-4">&#36;12T</td>
+            <td class="px-6 py-4">&#36;1.9T</td>
+            <td class="px-6 py-4 text-right">
+              <div class="inline-flex items-center space-x-2">
+                <button
+                  class="accordion-toggle focus:outline-none"
+                  data-accordion-target="tet-chart"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 text-gray-600"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <!-- Accordion Row 3 -->
+          <tr id="tet-chart" class="hidden">
+            <td colspan="7" class="px-6 py-4 bg-gray-50">
+              <div class="w-full mx-auto bg-white p-6 rounded shadow">
+                <div class="mb-4">
+                  <select class="chartTypeSelect" class="rounded-full p-2">
+                    <option value="area">Area Chart</option>
+                    <option value="line">Line Chart</option>
+                    <option value="candlestick disabled" disabled>
+                      Candle Chart (Coming soon)
+                    </option>
+                    <option value="bar">Bar Chart</option>
+                    <option value="stepped">Stepped Line</option>
+                  </select>
+                </div>
+                <div class="relative h-96">
+                  <canvas class="w-full myChart"></canvas>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- ROW 4 (XRP) -->
+          <tr class="border-b">
+            <td class="px-6 py-4 flex items-center space-x-2">
+              <img src="/images/xrp.png" alt="XRP" class="w-5 h-5" />
+              <div>
+                <p class="font-semibold">XRP</p>
+                <p class="text-xs text-gray-500">XRP</p>
+              </div>
+            </td>
+            <td class="px-6 py-4">&#36;60.12</td>
+            <td class="px-6 py-4 w-24">
+              <canvas id="sparkline-xrp" width="100" height="32"></canvas>
+            </td>
+            <td class="px-6 py-4 text-red-500">&#8601 1.47%</td>
+            <td class="px-6 py-4">&#36;29.1T</td>
+            <td class="px-6 py-4">&#36;109.2B</td>
+            <td class="px-6 py-4 text-right">
+              <div class="inline-flex items-center space-x-2">
+                <button
+                  class="accordion-toggle focus:outline-none"
+                  data-accordion-target="xrp-chart"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 text-gray-600"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <!-- Accordion Row 4 -->
+          <tr id="xrp-chart" class="hidden">
+            <td colspan="7" class="px-6 py-4 bg-gray-50">
+              <div class="w-full mx-auto bg-white p-6 rounded shadow">
+                <div class="mb-4">
+                  <select class="chartTypeSelect" class="rounded-full p-2">
+                    <option value="bar">Bar Chart</option>
+                    <option value="line">Line Chart</option>
+                    <option value="candlestick disabled" disabled>
+                      Candle Chart (Coming soon)
+                    </option>
+                    <option value="area">Area Chart</option>
+                    <option value="stepped">Stepped Line</option>
+                  </select>
+                </div>
+                <div class="relative h-96">
+                  <canvas class="w-full myChart"></canvas>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- ROW 6 (Solana) -->
+          <tr>
+            <td class="px-6 py-4 flex items-center space-x-2">
+              <img src="/images/solana.png" alt="SOL" class="w-5 h-5" />
+              <div>
+                <p class="font-semibold">Solana</p>
+                <p class="text-xs text-gray-500">SOL</p>
+              </div>
+            </td>
+            <td class="px-6 py-4">&#36;11,885.54</td>
+            <td class="px-6 py-4 w-24">
+              <canvas id="sparkline-sol" width="100" height="32"></canvas>
+            </td>
+            <td class="px-6 py-4 text-green-500">&#8599; 0.70%</td>
+            <td class="px-6 py-4">&#36;48.7T</td>
+            <td class="px-6 py-4">&#36;900.2B</td>
+            <td class="px-6 py-4 text-right">
+              <div class="inline-flex items-center space-x-2">
+                <button
+                  class="accordion-toggle focus:outline-none"
+                  data-accordion-target="sol-chart"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 text-gray-600"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <!-- Accordion Row 6 -->
+          <tr id="sol-chart" class="hidden">
+            <td colspan="7" class="px-6 py-4 bg-gray-50">
+              <div class="w-full mx-auto bg-white p-6 rounded shadow">
+                <div class="mb-4">
+                  <select class="chartTypeSelect" class="rounded-full p-2">
+                    <option value="line">Line Chart</option>
+                    <option value="candlestick disabled" disabled>
+                      Candle Chart (Coming soon)
+                    </option>
+                    <option value="bar">Bar Chart</option>
+                    <option value="area">Area Chart</option>
+                    <option value="stepped">Stepped Line</option>
+                  </select>
+                </div>
+                <div class="relative h-96">
+                  <canvas class="w-full myChart"></canvas>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div
+      id="confirmModal"
+      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden"
+    >
+      <div class="bg-white p-6 rounded shadow max-w-sm w-full">
+        <h3 class="text-xl font-bold mb-4">Delete</h3>
+        <p class="mb-4">
+          Are you sure you want to delete
+          <span id="itemName">{item.name}</span>?
+        </p>
+        <div class="flex justify-end space-x-4">
+          <button id="cancelButton" class="px-4 py-2 border rounded-full">
+            Cancel
+          </button>
+          <button
+            id="confirmDeleteButton"
+            class="px-4 py-2 bg-red-600 text-white rounded-full"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript for Sparkline Charts + Accordion Toggle -->
+    <script>
+      // Minimal sparkline data (example only)
+      const sparkDataSets = {
+        "sparkline-btc": [10, 13, 11, 9, 14, 12],
+        "sparkline-eth": [5, 6, 4, 7, 6, 8],
+        "sparkline-usdt": [2, 2, 2, 2, 2, 2],
+        "sparkline-xrp": [4, 3, 5, 4, 2, 3],
+        "sparkline-sol": [2, 4, 3, 5, 6, 7],
+      };
+
+      const sparklineColors = {
+        "sparkline-btc": "#f7931a",
+        "sparkline-eth": "#627EEA",
+        "sparkline-usdt": "#22a17b",
+        "sparkline-xrp": "#000000",
+        "sparkline-sol": "#9945FF",
+      };
+
+      // Create small line charts for each sparkline canvas with fixed size
+      Object.keys(sparkDataSets).forEach((canvasId) => {
+        const ctx = document.getElementById(canvasId);
+        if (ctx) {
+          new Chart(ctx, {
+            type: "line",
+            data: {
+              labels: sparkDataSets[canvasId].map((_, i) => i + 1),
+              datasets: [
+                {
+                  data: sparkDataSets[canvasId],
+                  borderColor: sparklineColors[canvasId],
+                  backgroundColor: "rgba(225, 89, 27, 0.2)",
+                  fill: false,
+                  tension: 0.3,
+                  borderWidth: 2,
+                },
+              ],
+            },
+            options: {
+              plugins: { legend: { display: false } },
+              scales: {
+                x: { display: false },
+                y: { display: false },
+              },
+              elements: { point: { radius: 0 } },
+              responsive: true,
+              maintainAspectRatio: true,
+            },
+          });
+        }
+      });
+
+      // Accordion toggle for each row
+      document.querySelectorAll(".accordion-toggle").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const targetId = btn.getAttribute("data-accordion-target");
+          const detailsRow = document.getElementById(targetId);
+          detailsRow.classList.toggle("hidden");
+          const svgIcon = btn.querySelector("svg");
+          svgIcon.classList.toggle("transform");
+          svgIcon.classList.toggle("rotate-180");
+        });
+      });
+    </script>
+    <script>
+      // Toggle dropdown visibility on button click
+      document.getElementById("menuBtn").addEventListener("click", function () {
+        document.getElementById("dropdownMenu").classList.toggle("hidden");
+      });
+    </script>
+    <script>
+      // When the delete button is clicked, open the confirmation modal.
+      document.querySelectorAll(".delete-button").forEach((button) => {
+        button.addEventListener("click", () => {
+          // Optionally set the item name into the modal. Assume the button has a data attribute with the item name.
+          const itemName = button.getAttribute("data-item-name") || "this item";
+          document.getElementById("itemName").textContent = itemName;
+          // Show the modal
+          document.getElementById("confirmModal").classList.remove("hidden");
+        });
+      });
+
+      // When the cancel button is clicked, close the modal.
+      document.getElementById("cancelButton").addEventListener("click", () => {
+        document.getElementById("confirmModal").classList.add("hidden");
+      });
+
+      // When the confirm delete button is clicked, perform deletion logic and close the modal.
+      document
+        .getElementById("confirmDeleteButton")
+        .addEventListener("click", () => {
+          // Here you can add the deletion logic, for example, remove the item from the DOM.
+          // document.querySelector(`[data-item-name="&#36;{document.getElementById('itemName').textContent}"]`).remove();
+
+          // Close the modal after deletion logic.
+          document.getElementById("confirmModal").classList.add("hidden");
+        });
+    </script>
+
+    <script src="/scripts/viz.js"></script>
+  </body>
+</html>
