@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DigiMNY | Jump-start Your Crypto Journey</title>
+
+    <!-- Link to the compiled styles.css -->
+    <link rel="stylesheet" href="./styles/index.css" />
+
+    <!-- Import external tailwind.config.js -->
+    <script type="module">
+      import config from "./scripts/tailwind.config.js";
+      // Assign config to the global tailwind.config so the CDN picks it up
+      window.tailwind = window.tailwind || {};
+      window.tailwind.config = config;
+    </script>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="font-cb text-cb-dark">
+    <!-- Header -->
+    <header class="flex items-center px-4 md:px-8 py-4 bg-white">
+      <!-- DigiMNY Logo -->
+      <a href="/">
+        <!-- <img
+          src="https://images.ctfassets.net/q5ulk4bp65r7/3TBS4oVkD1ghowTqVQJlqj/2dfd4ea3b623a7c0d8deb2ff445dee9e/Consumer_Wordmark.svg"
+          alt="Coinbase Logo"
+          class="h-6 md:h-8"
+        /> -->
+        <div class="nav-logo">DigiMNY</div>
+      </a>
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:block ml-auto mr-4">
+        <ul class="flex space-x-6 text-sm">
+          <li>
+            <a href="/watchlists" class="hover:text-cb-blue">Watchlist</a>
+          </li>
+          <li><a href="/about" class="hover:text-cb-blue">About Us</a></li>
+        </ul>
+      </nav>
+      <!-- Desktop Right Buttons -->
+      <div class="hidden md:flex space-x-4">
+        <button class="text-sm hover:text-cb-blue rounded-full">Sign in</button>
+        <button class="px-4 py-2 bg-cb-blue text-white text-sm rounded-full">
+          Sign up
+        </button>
+      </div>
+      <!-- Mobile Menu Button (visible on mobile only) -->
+      <button class="md:hidden text-cb-dark">☰</button>
+    </header>
+
+    <!-- Hero Section -->
+    <section
+      class="px-4 mx-auto md:px-8 max-w-[1400px] py-8 md:py-16 bg-white grid grid-cols-1 md:grid-cols-2 gap-6"
+    >
+      <!-- Left: Hero Image -->
+      <div class="flex justify-center">
+        <!-- <img
+          src="https://images.ctfassets.net/c5bd0wqjc7v0/6TEOvIYU6qtgLm87Y4mK5s/4171df02eabc835c518884c2b3476380/hero_3x_B.png?fm=webp&q=100&w=1180"
+          alt="Coinbase Hero"
+          class="max-w-xs md:max-w-sm"
+        /> -->
+        <h1 class="text-3xl md:text-4xl font-bold">
+          The future of money is here
+        </h1>
+      </div>
+      <!-- Right: Headline and Form -->
+      <div
+        class="flex flex-col justify-center space-y-4 text-center md:text-left"
+      >
+        <!-- <h1 class="text-3xl md:text-4xl font-bold">
+          The future of money is here
+        </h1> -->
+        <p class="text-base md:text-lg text-cb-gray-600">
+          We're the most trusted place for people and businesses to buy, sell,
+          and manage crypto.
+        </p>
+        <!-- <form
+          class="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-2"
+        >
+          <input
+            type="email"
+            placeholder="Email address"
+            class="border border-gray-300 px-4 py-2 rounded-full w-full md:w-auto"
+          />
+          <button
+            type="submit"
+            class="px-6 py-2 bg-cb-blue text-white rounded-full"
+          >
+            Sign up
+          </button> -->
+        </form>
+      </div>
+    </section>
+    <!-- Crypto Exploration Section -->
+    <section class="w-full py-12 bg-cb-blue-wash">
+      <!-- Limit container width to 1400px -->
+      <div class="mx-auto max-w-[1400px] px-4 md:px-8">
+        <!-- Two-column layout -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <!-- Left Column: Text + Button -->
+          <div>
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">
+              Explore crypto like Bitcoin, Ethereum, and Dogecoin
+            </h2>
+            <p class="text-cb-gray-600 mb-6">
+              Simply and securely buy, sell, and manage hundreds of
+              cryptocurrencies.
+            </p>
+            <button
+              class="px-6 py-3 bg-cb-blue text-white rounded-full hover:bg-opacity-90 transition"
+            >
+              See more assets
+            </button>
+          </div>
+
+          <!-- Right Column: Tabs + Crypto Cards -->
+          <div>
+            <!-- Tabs (static in this example) -->
+            <div class="flex space-x-4 mb-6">
+              <button
+                class="px-4 py-2 bg-cb-blue text-white font-semibold rounded-full shadow"
+              >
+                Tradable
+              </button>
+              <button
+                class="px-4 py-2 bg-cb-gray text-cb-dark font-semibold rounded-full"
+              >
+                Top gainers
+              </button>
+            </div>
+
+            <!-- Crypto Card Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+              <!-- Bitcoin Card -->
+              <div
+                class="bg-white rounded-xl p-4 shadow flex flex-col items-center text-center"
+              >
+                <img
+                  src="images/bitcoin.png"
+                  alt="Bitcoin icon"
+                  class="w-8 h-8 mb-2"
+                />
+                <h3 class="font-semibold">Bitcoin</h3>
+                <p class="text-cb-gray-600 text-sm">&#36;24,58,700</p>
+                <p class="text-red-500 text-sm mt-1">&#8601 0.02%</p>
+              </div>
+
+              <!-- Ethereum Card -->
+              <div
+                class="bg-white rounded-xl p-4 shadow flex flex-col items-center text-center"
+              >
+                <img
+                  src="images/ethereum.png"
+                  alt="Ethereum icon"
+                  class="w-8 h-8 mb-2"
+                />
+                <h3 class="font-semibold">Ethereum</h3>
+                <p class="text-cb-gray-600 text-sm">&#36;1,74,845</p>
+                <p class="text-green-500 text-sm mt-1">&#8599; 0.56%</p>
+              </div>
+
+              <!-- Tether Card -->
+              <div
+                class="bg-white rounded-xl p-4 shadow flex flex-col items-center text-center"
+              >
+                <img
+                  src="images/tether.png"
+                  alt="Tether icon"
+                  class="w-8 h-8 mb-2"
+                />
+                <h3 class="font-semibold">Tether</h3>
+                <p class="text-cb-gray-600 text-sm">&#36;85.40</p>
+                <p class="text-green-500 text-sm mt-1">&#8599; 0.00%</p>
+              </div>
+
+              <!-- XRP Card -->
+              <div
+                class="bg-white rounded-xl p-4 shadow flex flex-col items-center text-center"
+              >
+                <img src="images/xrp.png" alt="XRP icon" class="w-8 h-8 mb-2" />
+                <h3 class="font-semibold">XRP</h3>
+                <p class="text-cb-gray-600 text-sm">&#36;77.81</p>
+                <p class="text-red-500 text-sm mt-1">&#8601 0.18%</p>
+              </div>
+
+              <!-- Solana Card -->
+              <div
+                class="bg-white rounded-xl p-4 shadow flex flex-col items-center text-center"
+              >
+                <img
+                  src="images/solana.png"
+                  alt="Solana icon"
+                  class="w-8 h-8 mb-2"
+                />
+                <h3 class="font-semibold">Solana</h3>
+                <p class="text-cb-gray-600 text-sm">&#36;2,032.59</p>
+                <p class="text-green-500 text-sm mt-1">&#8599; 1.94%</p>
+              </div>
+
+              <!-- USDC Card -->
+              <div
+                class="bg-white rounded-xl p-4 shadow flex flex-col items-center text-center"
+              >
+                <img
+                  src="images/usdc.png"
+                  alt="USDC icon"
+                  class="w-8 h-8 mb-2"
+                />
+                <h3 class="font-semibold">USDC</h3>
+                <p class="text-cb-gray-600 text-sm">&#36;85.41</p>
+                <p class="text-green-500 text-sm mt-1">&#8599; 0.00%</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Next Section -->
+    <section class="w-full py-12 bg-white">
+      <div
+        class="mx-auto max-w-[1400px] px-4 md:px-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center"
+      >
+        <!-- Left Column -->
+        <div class="space-y-4">
+          <p class="text-gray-500 text-sm">Take control of your money</p>
+          <h2 class="text-3xl md:text-4xl font-bold">
+            Start your portfolio today and discover crypto
+          </h2>
+          <form
+            class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2"
+          >
+            <input
+              type="email"
+              placeholder="Email address"
+              class="border border-gray-300 px-4 py-2 rounded-full w-full sm:w-auto"
+            />
+            <button
+              type="submit"
+              class="px-6 py-2 bg-cb-blue text-white rounded-full hover:bg-opacity-90 transition"
+            >
+              Sign up
+            </button>
+          </form>
+        </div>
+
+        <!-- Right Column -->
+        <div class="flex justify-center md:justify-end">
+          <img
+            src="https://images.ctfassets.net/c5bd0wqjc7v0/5o0IbUnXunFKmiSC31gK6j/c9da092eda3ebc34941dfa3d107437f4/Type_Circles_4x.png?fm=webp&q=100&w=1180"
+            alt="Crypto Type Circles"
+            class="max-w-full h-auto"
+          />
+        </div>
+      </div>
+    </section>
+    <!-- "Get Started" Section -->
+    <section class="bg-cb-blue text-white py-12">
+      <div class="mx-auto max-w-[1400px] px-4 md:px-8">
+        <!-- Top Row -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div>
+            <h2 class="text-2xl md:text-3xl font-semibold">
+              Get started in a few minutes
+            </h2>
+          </div>
+          <div>
+            <p class="mb-4">
+              Create an account, link your bank account, and start buying &amp;
+              selling.
+            </p>
+            <button
+              class="px-6 py-2 bg-white text-cb-blue font-semibold rounded-full"
+            >
+              Create account
+            </button>
+          </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          <div>
+            <h3 class="text-3xl md:text-4xl font-bold">&#36;145B</h3>
+            <p class="text-sm uppercase tracking-wide mt-1">
+              Quarterly Volume Traded
+            </p>
+          </div>
+          <div>
+            <h3 class="text-3xl md:text-4xl font-bold">100+</h3>
+            <p class="text-sm uppercase tracking-wide mt-1">
+              Countries Supported
+            </p>
+          </div>
+          <div>
+            <h3 class="text-3xl md:text-4xl font-bold">&#36;130B</h3>
+            <p class="text-sm uppercase tracking-wide mt-1">
+              Assets on Platform
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
