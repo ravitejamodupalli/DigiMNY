@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chart</title>
+    
+    
+    
+    <link rel="stylesheet" href="./styles/index.css" />
+
+    <!-- Import external tailwind.config.js -->
+    <script type="module">
+      import config from "./scripts/tailwind.config.js";
+      // Assign config to the global tailwind.config so the CDN picks it up
+      window.tailwind = window.tailwind || {};
+      window.tailwind.config = config;
+    </script>
+
+    <!-- Tailwind CSS CDN -->
+    <script  src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="font-cb text-cb-dark bg-white">
+    <!-- Chart Section -->
+    <section class="w-full py-12 bg-white">
+      <div class="mx-auto max-w-[1400px] px-4 md:px-8">
+        <!-- Controls: Chart type and Timeframe -->
+        <div class="flex flex-col md:flex-row items-center justify-between mb-4 space-y-4 md:space-y-0">
+          <div class="flex space-x-4">
+            <!-- Chart Type Dropdown -->
+            <select id="chartTypeSelect" class="rounded-full border border-gray-300 p-2">
+              <option value="line">Line Chart</option>
+              <option value="candlestick">Candle Chart</option>
+              <option value="bar">Bar Chart</option>
+            </select>
+            <!-- Timeframe Dropdown -->
+            <select id="timeFrameSelect" class="rounded-full border border-gray-300 p-2">
+              <option value="hour">Hour</option>
+              <option value="day" selected>Day</option>
+              <option value="week">Week</option>
+              <option value="month">Month</option>
+              <option value="year">Year</option>
+              <option value="all">All</option>
+            </select>
+          </div>
+        </div>
+        <!-- Chart Canvas -->
+        <div class="relative h-96">
+          <canvas id="myChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chart.js and Financial Chart Plugin CDN URLs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial"></script>
+    
+    <script>
+      let chartInstance = null;
+      let bitcoinData = null;
+      
+      function updateChart() {
+        const chartType = document.getElementById("chartTypeSelect").value;
+        const timeFrame = document.getElementById("timeFrameSelect").value;
+    
+        // Extract quotes from the JSON data (structure provided in bitcoin.json :contentReference[oaicite:2]{index=2}&#8203;:contentReference[oaicite:3]{index=3})
+        let quotes = bitcoinData.data.assetBySlug[timeFrame].quotes;
+        // Reverse quotes to present data in ascending order of time
+        quotes = quotes.slice().reverse();
+    
+        // Create labels from timestamps (using local time string)
+        const labels = quotes.map(q => new Date(q.timestamp).toLocaleTimeString());
+        let datasetData;
+        if (chartType === "candlestick") {
+          // For candle charts, create OHLC objects (using the same value for open, high, low, close)
+          datasetData = quotes.map(q => ({
+            t: q.timestamp,
+            o: parseFloat(q.price),
+            h: parseFloat(q.price),
+            l: parseFloat(q.price),
+            c: parseFloat(q.price)
+          }));
+        } else {
+          // For line and bar charts, use a simple numeric array
+          datasetData = quotes.map(q => parseFloat(q.price));
+        }
+    
+        // Destroy an existing chart if it exists
+        if (chartInstance) {
+          chartInstance.destroy();
+        }
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const commonOptions = {
+          scales: {
+            x: {
+              ticks: { color: '#000' },
+              grid: { display: false }
+            },
+            y: {
+              ticks: { color: '#000' },
+              grid: { color: '#e5e7eb' }
+            }
+          },
+          responsive: true,
+          maintainAspectRatio: false
+        };
+    
+        let config;
+        if (chartType === "candlestick") {
+          config = {
+            type: 'candlestick',
+            data: {
+              datasets: [{
+                label: 'Bitcoin Price',
+                data: datasetData,
+                // Set the candlestick border color to the provided color
+                borderColor: 'rgba(225,89,27,1)'
+              }]
+            },
+            options: commonOptions
+          };
+        } else {
+          config = {
+            type: chartType, // 'line' or 'bar'
+            data: {
+              labels: labels,
+              datasets: [{
+                label: 'Bitcoin Price',
+                data: datasetData,
+                borderColor: 'rgba(225,89,27,1)',
+                backgroundColor: 'rgba(225,89,27,0.2)',
+                fill: chartType === 'line'
+              }]
+            },
+            options: commonOptions
+          };
+        }
+    
+        chartInstance = new Chart(ctx, config);
+      }
+    
+      // Update chart when dropdown values change
+      document.getElementById("chartTypeSelect").addEventListener("change", updateChart);
+      document.getElementById("timeFrameSelect").addEventListener("change", updateChart);
+    
+      // Load bitcoin JSON data and initialize the chart
+      fetch('/data-points/bitcoin.json')
+        .then(response => response.json())
+        .then(data => {
+          bitcoinData = data;
+          updateChart();
+        });
+    </script>
+  </body>
+</html>
