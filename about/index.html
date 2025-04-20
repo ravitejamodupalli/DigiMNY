@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accordion Table with Charts</title>
+
+    <link rel="stylesheet" href="/styles/index.css" />
+
+    <script type="module">
+      import config from "/scripts/tailwind.config.js";
+
+      window.tailwind = window.tailwind || {};
+      window.tailwind.config = config;
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Chart.js (via CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <header class="flex items-center px-4 md:px-8 py-4 bg-white">
+      <!-- Coinbase Logo -->
+      <a href="/">
+        <!-- <img
+          src="https://images.ctfassets.net/q5ulk4bp65r7/3TBS4oVkD1ghowTqVQJlqj/2dfd4ea3b623a7c0d8deb2ff445dee9e/Consumer_Wordmark.svg"
+          alt="Coinbase Logo"
+          class="h-6 md:h-8"
+        /> -->
+        <div class="nav-logo">DigiMNY</div>
+      </a>
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:block ml-auto mr-4">
+        <ul class="flex space-x-6 text-sm">
+          <li>
+            <a href="/watchlists" class="text-cb-blue">Watchlist</a>
+          </li>
+          <li><a href="/about" class="hover:text-cb-blue">About Us</a></li>
+        </ul>
+      </nav>
+      <!-- Desktop Right Buttons -->
+      <div class="hidden md:flex space-x-4">
+        <button class="text-sm hover:text-cb-blue rounded-full">Sign in</button>
+        <button class="px-4 py-2 bg-cb-blue text-white text-sm rounded-full">
+          Sign up
+        </button>
+      </div>
+      <!-- Mobile Menu Button (visible on mobile only) -->
+      <button class="md:hidden text-cb-dark">☰</button>
+    </header>
+    <main>
+      <section class="py-16 bg-gray-100">
+        <div class="max-w-6xl mx-auto px-4">
+          <h2 class="text-4xl font-bold text-center mb-12">Meet Our Team</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Person 1 -->
+            <div
+              class="bg-white rounded-lg shadow p-6 flex flex-col items-center"
+            >
+              <img
+                src="https://media.licdn.com/dms/image/v2/D5603AQGRrcxFAwEC3Q/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1727790735685?e=1750896000&v=beta&t=DPX8cedf2Po8WmBx8c5gvDEmJ4KjSXB191-_6syzAlc"
+                alt="Meghana Kandagatla"
+                class="w-32 h-32 rounded-full mb-4 object-cover"
+              />
+              <h3 class="text-xl font-semibold">Meghana Kandagatla</h3>
+              <!-- <p class="text-gray-600">CEO &amp; Founder</p> -->
+            </div>
+            <!-- Person 2 -->
+            <div
+              class="bg-white rounded-lg shadow p-6 flex flex-col items-center"
+            >
+              <img
+                src="\images\ravi.png"
+                alt="Ravi Teja"
+                class="w-32 h-32 rounded-full mb-4 object-cover"
+              />
+              <h3 class="text-xl font-semibold">Ravi Teja Modupalli</h3>
+              <!-- <p class="text-gray-600">CTO</p> -->
+            </div>
+            <!-- Person 3 -->
+            <div
+              class="bg-white rounded-lg shadow p-6 flex flex-col items-center"
+            >
+              <img
+                src="\images\srikar.png"
+                alt="Srikar Kamatham"
+                class="w-32 h-32 rounded-full mb-4 object-cover"
+              />
+              <h3 class="text-xl font-semibold">Srikar Kamatham</h3>
+              <!-- <p class="text-gray-600">Head of Marketing</p> -->
+            </div>
+            <!-- Person 4 -->
+            <div
+              class="bg-white rounded-lg shadow p-6 flex flex-col items-center"
+            >
+              <img
+                src="https://media.licdn.com/dms/image/v2/D5603AQHMQuW9tXQpOw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1729519804399?e=2147483647&v=beta&t=MYdzdkWk9qL8KxrLyJfd8qfNcK1EaiUsgMnUwPENaIg"
+                alt="Venkata Sai Kolla"
+                class="w-32 h-32 rounded-full mb-4 object-cover"
+              />
+              <h3 class="text-xl font-semibold">Venkata Sai Kolla</h3>
+              <!-- <p class="text-gray-600">Lead Developer</p> -->
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+          <h2 class="text-4xl font-bold text-center mb-12">Our Mission</h2>
+          <p class="text-lg text-gray-700 text-center max-w-2xl mx-auto">
+            At DigiMNY, we are committed to revolutionizing the way you manage
+            your digital assets. Our mission is to provide a seamless and
+            secure platform that empowers users to take control of their
+            financial future.
+          </p>
+        </div>
+      </section>
+      <section class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+          <h2 class="text-4xl font-bold text-center mb-12">Project Overview</h2>
+          <p class="text-lg text-gray-700 text-center max-w-2xl mx-auto mb-8">
+        Welcome to DigiMNY, an innovative platform designed to revolutionize digital asset management.
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-gray-100 p-6 rounded-lg shadow">
+          <h3 class="text-2xl font-semibold mb-4">Idea</h3>
+          <p class="text-gray-700 mb-4">
+            Our project is built to simplify and secure digital transactions, offering a user-friendly interface for everyone.
+          </p>
+          <ul class="list-disc pl-5 text-gray-700">
+            <li>Streamlined user experience.</li>
+            <li>Enhanced security protocols.</li>
+            <li>Modern design and functionality.</li>
+          </ul>
+        </div>
+        <div class="bg-gray-100 p-6 rounded-lg shadow">
+          <h3 class="text-2xl font-semibold mb-4">Purpose</h3>
+          <p class="text-gray-700 mb-4">
+            We aim to empower users with the tools needed to manage and grow their digital investments seamlessly.
+          </p>
+          <ul class="list-disc pl-5 text-gray-700">
+            <li>User empowerment and control.</li>
+            <li>Seamless transaction management.</li>
+            <li>Comprehensive financial insights.</li>
+          </ul>
+        </div>
+        <div class="bg-gray-100 p-6 rounded-lg shadow">
+          <h3 class="text-2xl font-semibold mb-4">Key Features</h3>
+          <p class="text-gray-700 mb-4">
+            Enjoy real-time tracking, secure transactions, and insightful analytics that help you stay ahead in the digital world.
+          </p>
+          <ul class="list-disc pl-5 text-gray-700">
+            <li>Real-time asset tracking.</li>
+            <li>Secure and encrypted transactions.</li>
+            <li>Detailed analytics and reporting.</li>
+          </ul>
+        </div>
+          </div>
+        </div>
+      </section>
+      <section class="py-16 bg-gray-100">
+        <div class="max-w-6xl mx-auto px-4">
+          <h2 class="text-4xl font-bold text-center mb-12">Logical Data Design Model</h2>
+          <div class="flex justify-center">
+            <img
+              src="/images/model.png"
+              alt="Logical Data Design Model"
+              class="max-w-full h-auto rounded-lg shadow"
+            />
+          </div>
+        </div>
+      <section class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+          <h2 class="text-4xl font-bold text-center mb-12">GitHub Repository</h2>
+          <div class="flex justify-center">
+            <a href="https://github.com/ravitejamodupalli/DigiMNY" class="px-6 py-2 bg-cb-blue text-white rounded-full text-lg hover:bg-cb-dark">
+              Visit Repository
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
