@@ -67,7 +67,7 @@ Our ER diagram models relationships between `Users`, `Coins`, and `Watchlists`. 
 
 ## 👨‍💻 Team Members
 
-- Raviteja Modupalli 
+- Ravi teja Modupalli 
 - Venkata Sai Kolla
 - Srikar Kamatham
 - Meghana Kandagatla 
