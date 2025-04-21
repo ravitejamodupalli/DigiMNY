@@ -43,8 +43,8 @@ DIGIMNY/
 ├── styles/                    # CSS files
 │   └── index.css
 ├── watchlists/                # Watchlist pages (Create, Edit)
-│   ├── create/
-│   ├── edit/
+│   ├── create/index.html
+│   ├── edit/index.html
 │   └── index.html
 ├── index.html                 # Homepage with chart interface
 └── ReadMe.md                  # Project documentation
