@@ -24,15 +24,31 @@ DigiMNY is a web-based platform built to simplify and secure the way users manag
 ## 📂 Folder Structure
 
 ```
-├── index.html              
-├── about/                   
-├── watchlist/               
-├── crypto/                  
-├── scripts/                 
-├── data-points/            
-├── images/                 
+DIGIMNY/
+├── about/                      # About page (project mission, team, data model)
+│   └── index.html
+├── crypto/detail/             # Coin detail pages
+│   └── index.html
+├── data-points/               # JSON files for each cryptocurrency
+│   ├── bitcoin.json
+│   ├── ethereum.json
+│   ├── solana.json
+│   ├── tether.json
+│   ├── usdc.json
+│   └── xrp.json
+├── images/                    # Logos, icons, and other media
+├── scripts/                   # JavaScript files
+│   ├── tailwind.config.js
+│   └── viz.js
+├── styles/                    # CSS files
+│   └── index.css
+├── watchlists/                # Watchlist pages (Create, Edit)
+│   ├── create/
+│   ├── edit/
+│   └── index.html
+├── index.html                 # Homepage with chart interface
+└── ReadMe.md                  # Project documentation
 ```
-
 ## ⚙️ Setup Instructions
 
 1. Clone the repository:
