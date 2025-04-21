@@ -62,6 +62,8 @@ DIGIMNY/
 ## 📈 Logical Data Design
 
 Our ER diagram models relationships between `Users`, `Coins`, and `Watchlists`. You can view the diagram in the **About us** section of the app.
+![Live Demo](http://ravitejamodupalli.myweb.usf.edu/images/model.png)
+
 
 ## 👨‍💻 Team Members
 
